@@ -47,8 +47,8 @@ resource "kubernetes_deployment" "identityhub" {
             }
           }
           port {
-            container_port = var.ports.resolution-api
-            name           = "res-port"
+            container_port = var.ports.presentation-api
+            name           = "pres-port"
           }
 
           port {
@@ -57,7 +57,7 @@ resource "kubernetes_deployment" "identityhub" {
           }
           port {
             container_port = var.ports.ih-identity-api
-            name           = "did-mgmt"
+            name           = "identity"
           }
           port {
             container_port = var.ports.ih-did
@@ -74,8 +74,9 @@ resource "kubernetes_deployment" "identityhub" {
           }
 
           liveness_probe {
-            exec {
-              command = ["curl", "-X GET", "http://localhost:${var.ports.web}/api/check/liveness"]
+            http_get {
+              path = "/api/check/liveness"
+              port = var.ports.web
             }
             failure_threshold = 10
             period_seconds    = 5
@@ -83,8 +84,9 @@ resource "kubernetes_deployment" "identityhub" {
           }
 
           readiness_probe {
-            exec {
-              command = ["curl", "-X GET", "http://localhost:${var.ports.web}/api/check/readiness"]
+            http_get {
+              path = "/api/check/readiness"
+              port = var.ports.web
             }
             failure_threshold = 10
             period_seconds    = 5
@@ -92,8 +94,9 @@ resource "kubernetes_deployment" "identityhub" {
           }
 
           startup_probe {
-            exec {
-              command = ["curl", "-X GET", "http://localhost:${var.ports.web}/api/check/startup"]
+            http_get {
+              path = "/api/check/startup"
+              port = var.ports.web
             }
             failure_threshold = 10
             period_seconds    = 5
@@ -142,10 +145,12 @@ resource "kubernetes_config_map" "identityhub-config" {
     WEB_HTTP_PATH                   = "/api"
     WEB_HTTP_IDENTITY_PORT          = var.ports.ih-identity-api
     WEB_HTTP_IDENTITY_PATH          = "/api/identity"
-    WEB_HTTP_RESOLUTION_PORT        = var.ports.resolution-api
-    WEB_HTTP_RESOLUTION_PATH        = "/api/resolution"
+    WEB_HTTP_PRESENTATION_PORT      = var.ports.presentation-api
+    WEB_HTTP_PRESENTATION_PATH      = "/api/presentation"
     WEB_HTTP_DID_PORT               = var.ports.ih-did
     WEB_HTTP_DID_PATH               = "/"
+    WEB_HTTP_STS_PORT               = var.ports.sts-api
+    WEB_HTTP_STS_PATH               = "/api/sts"
     JAVA_TOOL_OPTIONS               = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=${var.ports.ih-debug}"
     EDC_IAM_STS_PRIVATEKEY_ALIAS    = var.aliases.sts-private-key
     EDC_IAM_STS_PUBLICKEY_ID        = var.aliases.sts-public-key-id
@@ -155,6 +160,9 @@ resource "kubernetes_config_map" "identityhub-config" {
     EDC_DATASOURCE_DEFAULT_URL      = var.database.url
     EDC_DATASOURCE_DEFAULT_USER     = var.database.user
     EDC_DATASOURCE_DEFAULT_PASSWORD = var.database.password
+    EDC_WEB_REST_CORS_HEADERS       = "origin,content-type,accept,authorization,x-api-key"
+    EDC_WEB_REST_CORS_ORIGIN        = "*"
+    EDC_WEB_REST_CORS_METHODS       = "GET, POST, DELETE, PUT, OPTIONS" 
   }
 }
 

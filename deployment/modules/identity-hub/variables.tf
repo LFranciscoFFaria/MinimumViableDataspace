@@ -37,20 +37,22 @@ variable "namespace" {
 
 variable "ports" {
   type = object({
-    web             = number
-    debug           = number
-    ih-debug        = number
-    ih-did          = number
-    ih-identity-api = number
-    resolution-api  = number
+    web              = number
+    debug            = number
+    ih-debug         = number
+    ih-did           = number
+    ih-identity-api  = number
+    presentation-api = number
+    sts-api          = number
   })
   default = {
-    web             = 7080
-    debug           = 1044
-    ih-debug        = 1045
-    ih-did          = 7083
-    ih-identity-api = 7081
-    resolution-api  = 7082
+    web              = 7080
+    debug            = 1044
+    ih-debug         = 1045
+    ih-did           = 7083
+    ih-identity-api  = 7081
+    presentation-api = 7082
+    sts-api          = 7084
   }
 }
 
