@@ -21,11 +21,12 @@
 echo
 echo
 echo "Seed data to 'provider-qna' and 'provider-manufacturing'"
-for url in 'http://127.0.0.1/provider-manufacturing/cp' 'http://127.0.0.1/provider-qna/cp'
+for url in 'manufacturing' 'qna'
 do
   newman run \
     --folder "Seed" \
-    --env-var "HOST=$url" \
+    --env-var "HOST=http://127.0.0.1/provider-$url/cp" \
+    --env-var "OWNER=$url" \
     ./deployment/postman/MVD.postman_collection.json
 done
 

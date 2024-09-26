@@ -25,7 +25,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"asset-1\",\n    \"@type\": \"Asset\",\n    \"properties\": {\n        \"description\": \"This asset requires Membership to view and negotiate.\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}"
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"{{OWNER}}-asset-1\",\n    \"@type\": \"Asset\",\n    \"properties\": {\n        \"description\": \"This asset requires Membership to view and negotiate.\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{HOST}}/api/management/v3/assets",
@@ -58,7 +58,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"asset-2\",\n    \"@type\": \"Asset\",\n    \"properties\": {\n        \"description\": \"This asset requires Membership to view and SensitiveData credential to negotiate.\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}"
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"{{OWNER}}-asset-2\",\n    \"@type\": \"Asset\",\n    \"properties\": {\n        \"description\": \"This asset requires Membership to view and SensitiveData credential to negotiate.\"\n    },\n    \"dataAddress\": {\n        \"@type\": \"DataAddress\",\n        \"type\": \"HttpData\",\n        \"baseUrl\": \"https://jsonplaceholder.typicode.com/todos\",\n        \"proxyPath\": \"true\",\n        \"proxyQueryParams\": \"true\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{HOST}}/api/management/v3/assets",
@@ -190,7 +190,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"member-and-dataprocessor-def\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-dataprocessor\",\n    \"assetsSelector\": {\n        \"@type\": \"Criterion\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"asset-1\"\n    }\n}"
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"member-and-dataprocessor-def\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-dataprocessor\",\n    \"assetsSelector\": {\n        \"@type\": \"Criterion\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"{{OWNER}}-asset-1\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{HOST}}/api/management/v3/contractdefinitions",
@@ -223,7 +223,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"sensitive-only-def\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-sensitive\",\n    \"assetsSelector\": {\n        \"@type\": \"Criterion\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"asset-2\"\n    }\n}"
+							"raw": "{\n    \"@context\": [\n        \"https://w3id.org/edc/connector/management/v0.0.1\"\n    ],\n    \"@id\": \"sensitive-only-def\",\n    \"@type\": \"ContractDefinition\",\n    \"accessPolicyId\": \"require-membership\",\n    \"contractPolicyId\": \"require-sensitive\",\n    \"assetsSelector\": {\n        \"@type\": \"Criterion\",\n        \"operandLeft\": \"https://w3id.org/edc/v0.0.1/ns/id\",\n        \"operator\": \"=\",\n        \"operandRight\": \"{{OWNER}}-asset-2\"\n    }\n}"
 						},
 						"url": {
 							"raw": "{{HOST}}/api/management/v3/contractdefinitions",
