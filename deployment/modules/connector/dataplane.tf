@@ -132,5 +132,11 @@ resource "kubernetes_config_map" "dataplane-config" {
     EDC_IAM_STS_OAUTH_TOKEN_URL           = var.sts-token-url
     EDC_IAM_STS_OAUTH_CLIENT_ID           = var.participantId
     EDC_IAM_STS_OAUTH_CLIENT_SECRET_ALIAS = "consumer-participant-sts-client-secret"
+
+    # CORS
+    EDC_WEB_REST_CORS_ENABLED                  = true
+    EDC_WEB_REST_CORS_HEADERS                  = "origin,content-type,accept,authorization,x-api-key"
+    EDC_WEB_REST_CORS_ORIGIN                   = "localhost:4200"
+    EDC_WEB_REST_CORS_METHODS                  = "GET, POST, DELETE, PUT, OPTIONS" 
   }
 }
