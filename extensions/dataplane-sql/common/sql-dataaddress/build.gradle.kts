@@ -3,9 +3,10 @@ plugins {
 }
 
 dependencies {
-    //implementation(libs.edc.spi.core)
-    //implementation(libs.edc.spi.dataplane)
-    //implementation(libs.edc.spi.transfer)
-    //implementation(libs.edc.lib.util)
-    //implementation(libs.edc.spi.validator)
+    //implementation(project("org.eclipse.edc.connector.sql.dataaddress"))
+    implementation(libs.edc.spi.validator)
+    implementation(libs.edc.spi.transfer)
+    implementation(libs.edc.spi.core)
+    implementation(libs.edc.lib.util)
+
 }

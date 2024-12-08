@@ -3,14 +3,18 @@ plugins {
 }
 
 dependencies {
-    //implementation(libs.edc.spi.dataplane)
-    //implementation(libs.edc.core.dataplane.util)
+    
+    implementation(libs.edc.spi.dataplane)
+    implementation(libs.edc.spi.validator)
+    implementation(libs.edc.spi.core)
+    implementation(libs.edc.core.sql.lib)
+    implementation(libs.edc.core.dataplane.util)
+    implementation(libs.edc.lib.util)
 
-    //implementation(libs.edc.spi.validator)
-    //implementation(project(":extensions:dataplane-sql:common:sql-dataaddress"))
+    implementation(project(":extensions:dataplane-sql:common:sql-dataaddress"))
    
-    //implementation(libs.edc.core.sql-lib)
 
+    
 }
 
 

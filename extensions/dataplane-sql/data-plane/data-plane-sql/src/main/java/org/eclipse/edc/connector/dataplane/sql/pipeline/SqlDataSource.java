@@ -1,22 +1,5 @@
-/*
- *  Copyright (c) 2021 Microsoft Corporation
- *
- *  This program and the accompanying materials are made available under the
- *  terms of the Apache License, Version 2.0 which is available at
- *  https://www.apache.org/licenses/LICENSE-2.0
- *
- *  SPDX-License-Identifier: Apache-2.0
- *
- *  Contributors:
- *       Microsoft Corporation - initial API and implementation
- *
- */
-
 package org.eclipse.edc.connector.dataplane.sql.pipeline;
 
-
-import okhttp3.MediaType;
-import okhttp3.ResponseBody;
 import org.eclipse.edc.connector.sql.dataaddress.SqlDataAddress;
 import org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource;
 import org.eclipse.edc.connector.dataplane.spi.pipeline.StreamResult;
@@ -24,13 +7,13 @@ import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.query.QuerySpec;
 import org.eclipse.edc.sql.store.AbstractSqlStore;
+import org.eclipse.edc.sql.QueryExecutor;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,8 +32,7 @@ public class SqlDataSource {
     private Monitor monitor;
     private SqlDataAddress sqlDataAddress;
     private Connection connection;
-    private final SqlQueryExecutor sqlQueryExecutor;
-    private final AtomicReference<ResponseBodyStream> responseBodyStream = new AtomicReference<>();
+    private final QueryExecutor queryExecutor;
 
     private SqlDataSource() {   
     }
@@ -63,7 +45,7 @@ public class SqlDataSource {
             try {
                 var querySpec = QuerySpec.max();
                 //var queryStmt = statements.createQuery(querySpec);
-                try (var stream = sqlQueryExecutor.query(connection, true, this::mapResultSet, sqlDataAddress.getQuery(), new ArrayList<>[].toArray(Object[]::new))) {
+                try (var stream = sqlQueryExecutor.query(connection, true, this::mapResultSet, sqlDataAddress.getQuery())) {
                     return success(Stream.of(new SqlPart(name, stream, sqlDataAddress.getQuery())));
                 }
             } catch (SQLException exception) {
@@ -114,8 +96,8 @@ public class SqlDataSource {
             return this;
         }
 
-        public Builder sqlQueryExecutor(SqlQueryExecutor sqlQueryExecutor) {
-            dataSource.sqlQueryExecutor = sqlQueryExecutor;
+        public Builder queryExecutor(QueryExecutor queryExecutor) {
+            dataSource.queryExecutor = queryExecutor;
             return this;
         }
 
@@ -128,7 +110,7 @@ public class SqlDataSource {
             Objects.requireNonNull(dataSource.requestId, "requestId");
             Objects.requireNonNull(dataSource.monitor, "monitor");
             Objects.requireNonNull(dataSource.sqlDataAddress, "sqlDataAddress");
-            Objects.requireNonNull(dataSource.sqlQueryExecutor, "sqlQueryExecutor");
+            Objects.requireNonNull(dataSource.queryExecutor, "queryExecutor");
             Objects.requireNonNull(dataSource.connection, "connection");
 
             return dataSource;

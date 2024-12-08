@@ -39,6 +39,16 @@ edc-spi-transform = { module = "org.eclipse.edc:transform-spi", version.ref = "e
 edc-spi-catalog = { module = "org.eclipse.edc:catalog-spi", version.ref = "edc" }
 edc-spi-identity-did = { module = "org.eclipse.edc:identity-did-spi", version.ref = "edc" }
 
+# upstream EDC dependencies for GRAD extensions
+# sql data address
+edc-spi-validator = { module = "org.eclipse.edc:validator-spi", version.ref = "edc" }
+edc-spi-transfer = { module = "org.eclipse.edc:transfer-spi", version.ref = "edc" }
+edc-spi-core = { module = "org.eclipse.edc:transfer-spi", version.ref = "edc" }
+edc-spi-dataplane = { module = "org.eclipse.edc:data-plane-spi", version.ref = "edc" }
+edc-lib-util = { module = "org.eclipse.edc:util-lib", version.ref = "edc" }
+# dataplane sql
+edc-core-dataplane-util = { module = "org.eclipse.edc:data-plane-util", version.ref = "edc" }
+edc-core-sql-lib = { module = "org.eclipse.edc:sql-lib", version.ref = "edc" }
 
 # EDC lib dependencies
 edc-lib-jws2020 = { module = "org.eclipse.edc:jws2020-lib", version.ref = "edc" }

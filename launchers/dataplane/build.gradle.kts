@@ -20,8 +20,15 @@ plugins {
 
 dependencies {
     runtimeOnly(libs.edc.bom.dataplane)
-    runtimeOnly(project(":extensions:dataplane-sql:common:sql-dataaddress")) // 
-    runtimeOnly(project(":extensions:dataplane-sql:data-plane:data-plane-sql")) // 
+    implementation(project(":extensions:dataplane-sql:common:sql-dataaddress")) // 
+    implementation(project(":extensions:dataplane-sql:data-plane:data-plane-sql")) // 
+
+    runtimeOnly(libs.edc.spi.validator)
+    runtimeOnly(libs.edc.spi.transfer)
+    runtimeOnly(libs.edc.spi.validator)
+    runtimeOnly(libs.edc.spi.core)
+//    runtimeOnly(libs.edc.spi.dataplane)
+    runtimeOnly(libs.edc.lib.util)
 
     if (project.properties.getOrDefault("persistence", "false") == "true") {
         runtimeOnly(libs.edc.vault.hashicorp)

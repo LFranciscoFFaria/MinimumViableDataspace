@@ -1,28 +1,8 @@
-/*
- *  Copyright (c) 2021 Microsoft Corporation
- *
- *  This program and the accompanying materials are made available under the
- *  terms of the Apache License, Version 2.0 which is available at
- *  https://www.apache.org/licenses/LICENSE-2.0
- *
- *  SPDX-License-Identifier: Apache-2.0
- *
- *  Contributors:
- *       Microsoft Corporation - initial API and implementation
- *       Siemens AG - changes to make it compatible with AWS S3, Azure blob and ALI Object Storage presigned URL for upload
- *
- */
+package org.eclipse.edc.connector.dataplane.sql;
 
-package org.eclipse.edc.connector.dataplane.httpsql;
-
-import org.eclipse.edc.connector.dataplane.http.params.HttpRequestFactory;
-import org.eclipse.edc.connector.dataplane.http.params.HttpRequestParamsProviderImpl;
-import org.eclipse.edc.connector.dataplane.http.pipeline.HttpDataSinkFactory;
-import org.eclipse.edc.connector.dataplane.http.pipeline.SqlDataSourceFactory;
-import org.eclipse.edc.connector.dataplane.http.spi.HttpRequestParamsProvider;
+import org.org.eclipse.edc.connector.dataplane.sql.pipeline.SqlDataSourceFactory;
 import org.eclipse.edc.connector.dataplane.spi.pipeline.DataTransferExecutorServiceContainer;
 import org.eclipse.edc.connector.dataplane.spi.pipeline.PipelineService;
-import org.eclipse.edc.http.spi.EdcHttpClient;
 import org.eclipse.edc.runtime.metamodel.annotation.Extension;
 import org.eclipse.edc.runtime.metamodel.annotation.Inject;
 import org.eclipse.edc.runtime.metamodel.annotation.Provides;
@@ -35,12 +15,13 @@ import org.eclipse.edc.transaction.datasource.spi.DataSourceRegistry;
 import org.eclipse.edc.transaction.spi.TransactionContext;
 import org.eclipse.edc.sql.SqlQueryExecutor;
 import org.eclipse.edc.spi.types.TypeManager;
+import org.eclipse.edc.sql.QueryExecutor;
 
 /**
  * Provides support for reading data from an HTTP endpoint and sending data to an HTTP endpoint.
  */
-@Provides(HttpRequestParamsProvider.class)
-@Extension(value = DataPlaneHttpSqlExtension.NAME)
+//@Provides(HttpRequestParamsProvider.class)
+@Extension(value = DataPlaneSqlExtension.NAME)
 public class DataPlaneSqlExtension implements ServiceExtension {
     public static final String NAME = "Data Plane SQL";
     private static final int DEFAULT_PARTITION_SIZE = 5;
@@ -48,8 +29,10 @@ public class DataPlaneSqlExtension implements ServiceExtension {
     /**@Setting( description = "Number of partitions for parallel message push in the HttpDataSink", defaultValue = DEFAULT_PARTITION_SIZE + "", key = "edc.dataplane.http.sink.partition.size")
     private int partitionSize;*/
 
+    /* 
     @Inject
     private EdcHttpClient httpClient;
+    */
 
     @Inject
     private PipelineService pipelineService;
