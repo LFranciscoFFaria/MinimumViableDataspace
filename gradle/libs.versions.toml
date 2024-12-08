@@ -111,6 +111,8 @@ edc-ext-jersey-micrometer = { module = "org.eclipse.edc:jersey-micrometer", vers
 # EDC lib dependencies - CORS
 edc-lib-jersey-providers = { module = "org.eclipse.edc:jersey-providers-lib", version.ref = "edc" }
 
+# edc-sql-dataplane =  {}
+
 
 [bundles]
 connector = ["edc-boot", "edc-core-connector", "edc-ext-http", "edc-api-observability", "edc-ext-jsonld", "edc-core-token",

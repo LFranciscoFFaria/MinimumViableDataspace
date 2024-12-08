@@ -109,6 +109,7 @@ module "provider-postgres" {
     kubernetes_config_map.postgres-initdb-config-pqna.metadata[0].name,
     kubernetes_config_map.postgres-initdb-config-pm.metadata[0].name,
     kubernetes_config_map.postgres-initdb-config-ih.metadata[0].name,
+    kubernetes_config_map.postgres-initdb-config-ds.metadata[0].name,
   ]
   namespace = kubernetes_namespace.ns.metadata.0.name
 }
@@ -168,6 +169,20 @@ resource "kubernetes_config_map" "postgres-initdb-config-ih" {
         CREATE USER identity WITH ENCRYPTED PASSWORD 'identity' SUPERUSER;
         CREATE DATABASE identity;
         \c identity
+      EOT
+  }
+}
+
+  resource "kubernetes_config_map" "postgres-initdb-config-ds" {
+  metadata {
+    name      = "ds-initdb-config"
+    namespace = kubernetes_namespace.ns.metadata.0.name
+  }
+  data = {
+    "ds-initdb-config.sql" = <<-EOT
+        CREATE USER datasource WITH ENCRYPTED PASSWORD 'data-source' SUPERUSER;
+        CREATE DATABASE data_source;
+        \c datasource
       EOT
   }
 }

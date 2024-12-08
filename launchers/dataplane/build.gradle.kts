@@ -20,6 +20,8 @@ plugins {
 
 dependencies {
     runtimeOnly(libs.edc.bom.dataplane)
+    runtimeOnly(project(":extensions:dataplane-sql:common:sql-dataaddress")) // 
+    runtimeOnly(project(":extensions:dataplane-sql:data-plane:data-plane-sql")) // 
 
     if (project.properties.getOrDefault("persistence", "false") == "true") {
         runtimeOnly(libs.edc.vault.hashicorp)

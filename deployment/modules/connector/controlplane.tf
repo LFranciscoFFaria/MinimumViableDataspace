@@ -175,6 +175,9 @@ resource "kubernetes_config_map" "connector-config" {
     EDC_DATASOURCE_DEFAULT_URL                 = var.database.url
     EDC_DATASOURCE_DEFAULT_USER                = var.database.user
     EDC_DATASOURCE_DEFAULT_PASSWORD            = var.database.password
+    EDC_DATASOURCE_TEST_URL                    = "datasource"
+    EDC_DATASOURCE_TEST_USER                   = "data-source"
+    EDC_DATASOURCE_TEST_PASSWORD               = "jdbc:postgresql://localhost:5432/data_source"
     EDC_SQL_SCHEMA_AUTOCREATE                  = true
 
     # remote STS configuration

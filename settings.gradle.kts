@@ -40,6 +40,8 @@ include(":extensions:did-example-resolver")
 include(":extensions:catalog-node-resolver")
 include(":extensions:dcp-impl")
 include(":extensions:superuser-seed")
+include(":extensions:dataplane-sql:common:sql-dataaddress") // 
+include(":extensions:dataplane-sql:data-plane:data-plane-sql") // 
 //include(":tests:performance")
 include(":tests:end2end")
 
