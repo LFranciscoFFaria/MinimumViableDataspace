@@ -21,9 +21,9 @@ public class SqlDataAddressValidatorExtension implements ServiceExtension {
 
     @Override
     public void initialize(ServiceExtensionContext context) {
-        /** validatorRegistry.registerDestinationValidator(SqlDataAddressSchema.SQL_DATA,
+        /** validatorRegistry.registerDestinationValidator(SqlDataAddressSchema.SQLDATA,
                 new SqlSourceDataAddressValidator());**/
-        validatorRegistry.registerSourceValidator(SqlDataAddressSchema.SQL_DATA,
+        validatorRegistry.registerSourceValidator(SqlDataAddressSchema.SQLDATA,
                 new SqlSourceDataAddressValidator());
     }
 }

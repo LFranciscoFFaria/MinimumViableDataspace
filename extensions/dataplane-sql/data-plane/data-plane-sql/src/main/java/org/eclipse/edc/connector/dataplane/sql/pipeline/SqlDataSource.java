@@ -3,65 +3,81 @@ package org.eclipse.edc.connector.dataplane.sql.pipeline;
 import org.eclipse.edc.connector.sql.dataaddress.SqlDataAddress;
 import org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource;
 import org.eclipse.edc.connector.dataplane.spi.pipeline.StreamResult;
+import org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource.Part;
+import org.eclipse.edc.connector.dataplane.sql.pipeline.SqlPart;
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.query.QuerySpec;
 import org.eclipse.edc.sql.store.AbstractSqlStore;
 import org.eclipse.edc.sql.QueryExecutor;
+import org.eclipse.edc.transaction.spi.TransactionContext;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.stream.Collectors;
 import java.sql.Connection;
+import java.sql.ResultSet;
+//import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 import static java.lang.String.format;
 import static org.eclipse.edc.connector.dataplane.spi.pipeline.StreamResult.error;
 import static org.eclipse.edc.connector.dataplane.spi.pipeline.StreamResult.success;
 
-public class SqlDataSource {
+public class SqlDataSource implements org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource {
 
-    private String name;
     private String requestId;
     private Monitor monitor;
     private SqlDataAddress sqlDataAddress;
-    private Connection connection;
-    private final QueryExecutor queryExecutor;
+    private javax.sql.DataSource database;
+    private QueryExecutor queryExecutor;
+    private TransactionContext transactionContext;
 
     private SqlDataSource() {   
     }
 
     @Override
     public StreamResult<Stream<Part>> openPartStream() {
-        monitor.debug(() -> "Executing SQL Query: " + request.url());
-        transactionContext.execute(() -> {
-            Objects.requireNonNull(querySpec);
+        monitor.debug(() -> "Executing SQL Query: " + sqlDataAddress.getDataSourceName() + "- " + sqlDataAddress.getQuery());
+        //transactionContext.execute(() -> {
             try {
                 var querySpec = QuerySpec.max();
                 //var queryStmt = statements.createQuery(querySpec);
-                try (var stream = sqlQueryExecutor.query(connection, true, this::mapResultSet, sqlDataAddress.getQuery())) {
-                    return success(Stream.of(new SqlPart(name, stream, sqlDataAddress.getQuery())));
+                try (var stream = queryExecutor.query(database.getConnection(), true, this::mapResultSet, sqlDataAddress.getQuery())) {
+                    return success(Stream.of(new SqlPart("text/csv", new ByteArrayInputStream(stream.collect(Collectors.joining("\n")).getBytes(StandardCharsets.UTF_8)))));
+                }
+                catch(EdcException exception){
+                    new EdcException(exception); 
                 }
             } catch (SQLException exception) {
-                throw new EdcPersistenceException(exception);
+                throw new EdcException(exception);
             }
-        });
+        //});
+            return error("Error while opening stream");
+    }
+
+    @Override
+    public void close() {
+
     }
 
     private String mapResultSet(ResultSet resultSet) throws Exception {
-        String result;
+        String result = new String();
         int col_n = resultSet.getMetaData().getColumnCount();
 
         for(int i = 0; i < col_n; i++){
-            result.add(resultSet.getString(i) + ";");
+            result.concat(resultSet.getString(i) + ";");
         }
-        result.add("\n");
+        //result.concat("\n");
         return result;
     }
 
@@ -74,11 +90,6 @@ public class SqlDataSource {
 
         private Builder() {
             dataSource = new SqlDataSource();
-        }
-
-        public Builder name(String name) {
-            dataSource.name = name;
-            return this;
         }
 
         public Builder requestId(String requestId) {
@@ -101,8 +112,13 @@ public class SqlDataSource {
             return this;
         }
 
-        public Builder connection(Connection connection) {
-            dataSource.connection = connection;
+        public Builder database(javax.sql.DataSource database) {
+            dataSource.database = database;
+            return this;
+        }
+
+        public Builder transactionContext(TransactionContext transactionContext) {
+            dataSource.transactionContext = transactionContext;
             return this;
         }
 
@@ -111,7 +127,8 @@ public class SqlDataSource {
             Objects.requireNonNull(dataSource.monitor, "monitor");
             Objects.requireNonNull(dataSource.sqlDataAddress, "sqlDataAddress");
             Objects.requireNonNull(dataSource.queryExecutor, "queryExecutor");
-            Objects.requireNonNull(dataSource.connection, "connection");
+            Objects.requireNonNull(dataSource.database, "database");
+            Objects.requireNonNull(dataSource.transactionContext, "transactionContext");
 
             return dataSource;
         }

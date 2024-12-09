@@ -1,6 +1,9 @@
 package org.eclipse.edc.connector.dataplane.sql;
 
-import org.org.eclipse.edc.connector.dataplane.sql.pipeline.SqlDataSourceFactory;
+import org.eclipse.edc.connector.dataplane.sql.pipeline.SqlDataSourceFactory;
+
+import javax.management.Query;
+
 import org.eclipse.edc.connector.dataplane.spi.pipeline.DataTransferExecutorServiceContainer;
 import org.eclipse.edc.connector.dataplane.spi.pipeline.PipelineService;
 import org.eclipse.edc.runtime.metamodel.annotation.Extension;
@@ -16,6 +19,7 @@ import org.eclipse.edc.transaction.spi.TransactionContext;
 import org.eclipse.edc.sql.SqlQueryExecutor;
 import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.sql.QueryExecutor;
+//import org.eclipse.edc.sql.SqlCore;
 
 /**
  * Provides support for reading data from an HTTP endpoint and sending data to an HTTP endpoint.
@@ -48,6 +52,10 @@ public class DataPlaneSqlExtension implements ServiceExtension {
 
     @Inject
     private TransactionContext transactionContext;
+/* 
+    @Inject
+    private SqlCore sqlCore;
+*/
 
     @Inject
     private QueryExecutor queryExecutor;

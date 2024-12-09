@@ -1,7 +1,10 @@
 package org.eclipse.edc.connector.sql.dataaddress;
 
 import org.eclipse.edc.spi.types.domain.DataAddress;
-import org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema;
+import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.QUERY;
+import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.DATASOURCENAME;
+import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.SQLDATA;
+
 
 
 import java.util.Optional;
@@ -10,15 +13,15 @@ import static java.util.Collections.emptyMap;
 
 public class SqlDataAddress extends DataAddress {
     private SqlDataAddress() {
-        setType(SqlDataAddressSchema.SQL_DATA);
+        setType(SQLDATA);
     }
 
     public String getDataSourceName() {
-        return getStringProperty(SqlDataAddressSchema.dataSourceName);
+        return getStringProperty(DATASOURCENAME);
     }
 
     public String getQuery() {
-        return getStringProperty(SqlDataAddressSchema.query);
+        return getStringProperty(QUERY);
     }
 
     public static final class Builder extends DataAddress.Builder<SqlDataAddress, Builder> {
@@ -31,12 +34,12 @@ public class SqlDataAddress extends DataAddress {
         }
 
         public Builder dataSourceName(String dataSourceName) {
-            property(SqlDataAddressSchema.dataSourceName, dataSourceName);
+            property(DATASOURCENAME, dataSourceName);
             return this;
         }
 
         public Builder query(String query) {
-            property(SqlDataAddressSchema.query, query);
+            property(QUERY, query);
             return this;
         }
 

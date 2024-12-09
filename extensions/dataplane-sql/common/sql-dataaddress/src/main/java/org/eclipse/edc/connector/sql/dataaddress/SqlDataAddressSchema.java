@@ -1,11 +1,11 @@
 package org.eclipse.edc.connector.sql.dataaddress;
 
 public class SqlDataAddressSchema {
-    String SQL_DATA = "SqlData";
+    public static String SQLDATA = "SqlData";
 
     /** Name of the registered sql datasource from where to extract data. */
-    String DATASOURCE_NAME = "dataSourceName";
+    public static String DATASOURCENAME = "dataSourceName";
 
     /** Query used to extract data by the Sql source. */
-    String QUERY = "query";
+    public static String QUERY = "query";
 }

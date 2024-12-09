@@ -14,12 +14,13 @@ import org.eclipse.edc.runtime.metamodel.annotation.Inject;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import org.eclipse.edc.sql.QueryExecutor;
 
-import org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.SQL_DATA;
+import org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema;
 
 /**
- * Instantiates {@link SqlDataSource}s for requests whose source data type is {@link SqlDataAddressSchema#SQL_DATA}.
+ * Instantiates {@link SqlDataSource}s for requests whose source data type is {@link SqlDataAddressSchema#SQLDATA}.
  */
 public class SqlDataSourceFactory implements DataSourceFactory {
 
@@ -39,7 +40,7 @@ public class SqlDataSourceFactory implements DataSourceFactory {
 
     @Override
     public String supportedType() {
-        return SQL_DATA;
+        return SqlDataAddressSchema.SQLDATA;
     }
 
     @Override
@@ -60,10 +61,10 @@ public class SqlDataSourceFactory implements DataSourceFactory {
         return SqlDataSource.Builder.newInstance()
                 .monitor(monitor)
                 .requestId(request.getId())
-                .name(dataAddress.getName())
                 .sqlDataAddress(dataAddress)
                 .queryExecutor(queryExecutor)
-                .connection(Objects.requireNonNull(dataSourceRegistry.resolve(dataAddress.getDataSourceName()), format("DataSource %s could not be resolved", dataAddress.getDataSourceName())))
+                .database(Objects.requireNonNull(dataSourceRegistry.resolve(dataAddress.getDataSourceName()), String.format("DataSource %s could not be resolved", dataAddress.getDataSourceName())))
+                .transactionContext(transactionContext)
                 .build();
     }
 }
