@@ -29,6 +29,7 @@ dependencies {
     runtimeOnly(libs.edc.spi.core)
 //    runtimeOnly(libs.edc.spi.dataplane)
     runtimeOnly(libs.edc.lib.util)
+    runtimeOnly(libs.edc.lib.util)
 
     if (project.properties.getOrDefault("persistence", "false") == "true") {
         runtimeOnly(libs.edc.vault.hashicorp)

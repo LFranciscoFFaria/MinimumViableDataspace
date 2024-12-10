@@ -14,12 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.stream.Collectors;
-//import java.sql.Connection;
-//import javax.sql.DataSource;
 import java.util.stream.Stream;
 
-//import static java.lang.String.format;
-//import static org.eclipse.edc.connector.dataplane.spi.pipeline.StreamResult.error;
 import static org.eclipse.edc.connector.dataplane.spi.pipeline.StreamResult.success;
 
 public class SqlDataSource implements org.eclipse.edc.connector.dataplane.spi.pipeline.DataSource {

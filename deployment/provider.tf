@@ -183,6 +183,16 @@ resource "kubernetes_config_map" "postgres-initdb-config-ih" {
         CREATE USER datasource WITH ENCRYPTED PASSWORD 'data-source' SUPERUSER;
         CREATE DATABASE data_source;
         \c datasource
+
+        CREATE TABLE test_table (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            age INTEGER NOT NULL
+        );
+
+        INSERT INTO test_table (name, age) VALUES ('Alice', 30);
+        INSERT INTO test_table (name, age) VALUES ('Bob', 25);
+        INSERT INTO test_table (name, age) VALUES ('Charlie', 35);
       EOT
   }
 }

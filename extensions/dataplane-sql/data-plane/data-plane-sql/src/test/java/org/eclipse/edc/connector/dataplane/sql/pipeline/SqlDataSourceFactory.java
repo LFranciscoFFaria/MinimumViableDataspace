@@ -7,7 +7,6 @@ import org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema;
 import org.eclipse.edc.connector.sql.dataaddress.validation.SqlSourceDataAddressValidator;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
-//import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.spi.types.domain.transfer.DataFlowStartMessage;
 import org.eclipse.edc.sql.QueryExecutor;
 import org.eclipse.edc.transaction.datasource.spi.DataSourceRegistry;

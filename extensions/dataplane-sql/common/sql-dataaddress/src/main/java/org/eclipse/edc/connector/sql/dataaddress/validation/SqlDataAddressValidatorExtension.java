@@ -19,11 +19,11 @@ public class SqlDataAddressValidatorExtension implements ServiceExtension {
         return NAME;
     }
 
+    /** validatorRegistry.registerDestinationValidator(SqlDataAddressSchema.sQLDATA,
+            new SqlSourceDataAddressValidator());**/
     @Override
     public void initialize(ServiceExtensionContext context) {
-        /** validatorRegistry.registerDestinationValidator(SqlDataAddressSchema.SQLDATA,
-                new SqlSourceDataAddressValidator());**/
-        validatorRegistry.registerSourceValidator(SqlDataAddressSchema.SQLDATA,
+        validatorRegistry.registerSourceValidator(SqlDataAddressSchema.sQLDATA,
                 new SqlSourceDataAddressValidator());
     }
 }

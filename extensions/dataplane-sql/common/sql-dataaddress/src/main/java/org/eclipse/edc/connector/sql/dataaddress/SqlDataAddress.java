@@ -1,27 +1,25 @@
 package org.eclipse.edc.connector.sql.dataaddress;
 
 import org.eclipse.edc.spi.types.domain.DataAddress;
-import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.QUERY;
-import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.DATASOURCENAME;
-import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.SQLDATA;
-
-
 
 import java.util.Optional;
 
 import static java.util.Collections.emptyMap;
+import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.dATASOURCENANE;
+import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.qUERY;
+import static org.eclipse.edc.connector.sql.dataaddress.SqlDataAddressSchema.sQLDATA;
 
 public class SqlDataAddress extends DataAddress {
     private SqlDataAddress() {
-        setType(SQLDATA);
+        setType(sQLDATA);
     }
 
     public String getDataSourceName() {
-        return getStringProperty(DATASOURCENAME);
+        return getStringProperty(dATASOURCENANE);
     }
 
     public String getQuery() {
-        return getStringProperty(QUERY);
+        return getStringProperty(qUERY);
     }
 
     public static final class Builder extends DataAddress.Builder<SqlDataAddress, Builder> {
@@ -34,12 +32,12 @@ public class SqlDataAddress extends DataAddress {
         }
 
         public Builder dataSourceName(String dataSourceName) {
-            property(DATASOURCENAME, dataSourceName);
+            property(dATASOURCENANE, dataSourceName);
             return this;
         }
 
         public Builder query(String query) {
-            property(QUERY, query);
+            property(qUERY, query);
             return this;
         }
 
